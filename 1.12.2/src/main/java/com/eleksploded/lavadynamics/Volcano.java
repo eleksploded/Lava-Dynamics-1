@@ -218,7 +218,7 @@ public class Volcano {
 
 
 		//Make our "eruption"
-		world.newExplosion(null, fill.getX()-1, fill.getY()-3, fill.getZ(), Config.craterSize, true, true);
+		world.newExplosion(null, fill.getX(), fill.getY()+3, fill.getZ(), Config.craterSize, true, true);
 
 		if(debug) {
 			LavaDynamics.Logger.info("Done with crater");

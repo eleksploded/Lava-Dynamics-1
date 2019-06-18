@@ -22,10 +22,10 @@ public class Config {
     public static int distanceToGenerate;
     public static boolean worldGen;
     public static int volcanoCooldown;
-    public static int volcanoHeightBase;
-    public static int volcanoHeightDeviation;
-    public static int calderaradius;
-    public static int calderadeviation;
+    public static int volcanoHeightMin;
+    public static int volcanoHeightMax;
+    public static int calderaMax;
+    public static int calderaMin;
     public static String[] validDimensions = new String[1];
     
     public static boolean genVolcanoDebug;
@@ -67,11 +67,11 @@ public class Config {
     	volcanoCooldown = cfg.getInt("volcanoCooldown", Volcano, 25, 1, 10000, "Cooldown between trying to generate a volcano");
     	validDimensions = cfg.getStringList("validDimensions", Volcano, validDimensions, "Valid Dimensions for Volcano Generation");
     	
-    	volcanoHeightBase = cfg.getInt("VolcanoHeightBase", Volcano, 10, 6, 50, "The base height of the volcano from the center");
-    	volcanoHeightDeviation = cfg.getInt("volcanoHeightDeviation", Volcano, 3, 0, 24, "The Deviation from the base height");
+    	volcanoHeightMin = cfg.getInt("VolcanoHeightMin", Volcano, 3, 6, 50, "Minimum Height of the volcano");
+    	volcanoHeightMax = cfg.getInt("volcanoHeightMax", Volcano, 20, 0, 100, "Maximum Height of the Volcano");
     	
-    	calderaradius = cfg.getInt("calderaradius", Volcano, 5, 3, 10, "The base radius of the caldera atop the volcano");
-    	calderadeviation = cfg.getInt("calderadeviation", Volcano, 2, 0, 4, "The Deviation from the caldera radius");
+    	calderaMax = cfg.getInt("calderaMax", Volcano, 6, 2, 20, "Maximum size of te calderas");
+    	calderaMin = cfg.getInt("calderaMin", Volcano, 2, 2, 20, "Minimum size of the calderas");
     	
     	protectChunks = cfg.getBoolean("protectChunks", Volcano, true, "Protect Chunks that contain a tile Entity?");
     	

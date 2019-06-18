@@ -26,22 +26,20 @@ public class VolcanoGenerator extends WorldGenerator {
 			position = position.down();
 		}
 
-		int height = (rand.nextInt((Config.volcanoHeightDeviation*2)+1)-Config.volcanoHeightDeviation) + Config.volcanoHeightBase;
+		int height = rand.nextInt(Config.volcanoHeightMax-Config.volcanoHeightMin+1) + Config.volcanoHeightMin;
 		if(height <= 0) {
 			return false;
 		}
 		
-		int caldera = (rand.nextInt((Config.calderadeviation*2)+1)-Config.calderadeviation) + Config.calderaradius;
+		int caldera = (rand.nextInt(Config.calderaMax-Config.calderaMin+1) + Config.calderaMin);
 		
 		BlockPos pos = position.up(height);
-		System.out.println(pos);
 		
 		int i = caldera;
 		int j = pos.getY();
 		while(true) {
 			BlockPos pos1 = new BlockPos(pos.getX(),j,pos.getZ());
 			if(isCornerAir(world,pos1,i)) {
-				System.out.println("In Loop " + pos1 + " with " + i);
 				circle(i,world,pos1,j);
 				setBlockWithOre(world, pos1);
 				i = i+1;
@@ -51,7 +49,18 @@ public class VolcanoGenerator extends WorldGenerator {
 			}
 		}
 		
-		BlockPos fill1 = pos.down(caldera-2);
+		BlockPos fill1 = position.up(height);
+		while(!world.isAirBlock(fill1)){
+			fill1=fill1.down();
+			if(world.isAirBlock(fill1)){
+				break;
+			}
+			if(fill1.getY()<=0){
+				break;
+			}
+		}
+		BlockPos k = fill1;
+		
 		for(int radius = caldera-1;radius != 0;radius--){
 			int x1 = fill1.getX();
 			int y1 = fill1.getY()-1;
@@ -63,7 +72,7 @@ public class VolcanoGenerator extends WorldGenerator {
 			}
 			fill1 = fill1.down();
 		}
-
+		
 		return true;
 	}
 
@@ -86,8 +95,6 @@ public class VolcanoGenerator extends WorldGenerator {
 		int y1 = fill1.getY();
 		int z1 = fill1.getZ();
 		
-		System.out.println("Center of Circle: " + new BlockPos(x1,y1,z1));
-
 		for(float i1 = 0; i1 < radius; i1 += 0.5) {
 			for(float j1 = 0; j1 < 2 * Math.PI * i1; j1 += 0.5)
 				setBlockWithOre(world,new BlockPos((int)Math.floor(x1 + Math.sin(j1) * i1), y1, (int)Math.floor(z1 + Math.cos(j1) * i1)));
